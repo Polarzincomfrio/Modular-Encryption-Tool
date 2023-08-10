@@ -3,7 +3,7 @@
 #include <map>
 #include <string>
 
-// Inline definition of the Morse code lookup table
+// A map that associates characters with their Morse code representations
 extern std::map<char, std::string> morseCodeTable = {
     // Letters
     {'A', ".-"}, {'B', "-..."}, {'C', "-.-."},
