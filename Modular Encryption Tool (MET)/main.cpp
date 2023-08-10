@@ -65,14 +65,14 @@ int main() {
     std::string text;
 
     // Select mode: Morse Code or Binary
-    std::cout << "Select mode:\n1. Morse Code\n2. Binary\n";
+    std::cout << "Select mode:\n1. Morse Code \n2. Binary \n--------------------\n";
     std::cin >> mode;
 
     // Select operation: Encrypt or Decrypt
-    std::cout << "Select operation:\n1. Encrypt\n2. Decrypt\n";
+    std::cout << "--------------------\nSelect operation : \n1.Encrypt \n2.Decrypt\n--------------------\n";
     std::cin >> operation;
 
-    std::cout << "Enter text: ";
+    std::cout << "--------------------\nEnter text: ";
     std::cin.ignore(); // Clear the newline character
     std::getline(std::cin, text);
 
