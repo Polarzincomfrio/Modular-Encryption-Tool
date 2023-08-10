@@ -73,8 +73,8 @@ int main() {
     std::cout << " \\/__/~~/:/  / \\:\\~\\:\\ \\/__/    /:/  \\/__/" << std::endl;
     std::cout << "       /:/  /   \\:\\ \\:\\__\\     /:/  /     " << std::endl;
     std::cout << "      /:/  /     \\:\\ \\/__/     \\/__/      " << std::endl;
-    std::cout << "     /:/  /       \\:\\__\\                  " << std::endl;
-    std::cout << "     \\/__/         \\/__/                  " << std::endl;
+    std::cout << "     /:/  /       \\:\\__\\                   " << std::endl;
+    std::cout << "     \\/__/         \\/__/        by: Joao Vitor Polverari " << std::endl;
     std::cout << "\n\n";
     // ...
 
