@@ -61,41 +61,54 @@ std::string fromBinary(const std::string& binary) {
 }
 
 int main() {
-    int mode, operation;
     std::string text;
 
-    // Select mode: Morse Code or Binary
-    std::cout << "Select mode:\n1. Morse Code \n2. Binary \n--------------------\n";
-    std::cin >> mode;
+    while (true) {
+        int mode, operation;
 
-    // Select operation: Encrypt or Decrypt
-    std::cout << "--------------------\nSelect operation : \n1.Encrypt \n2.Decrypt\n--------------------\n";
-    std::cin >> operation;
+        // Select mode: Morse Code or Binary
+        std::cout << "Select mode:\n1. Morse Code \n2. Binary \n--------------------\n";
+        std::cin >> mode;
 
-    std::cout << "--------------------\nEnter text: ";
-    std::cin.ignore(); // Clear the newline character
-    std::getline(std::cin, text);
+        // Select operation: Encrypt or Decrypt
+        std::cout << "--------------------\nSelect operation: \n1. Encrypt \n2. Decrypt \n--------------------\n";
+        std::cin >> operation;
 
-    std::string result;
+        std::cout << "--------------------\nEnter text: ";
+        std::cin.ignore(); // Clear the newline character
+        std::getline(std::cin, text);
 
-    if (mode == 1) {
-        if (operation == 1) {
-            result = toMorseCode(text);
+        std::string result;
+
+        if (mode == 1) {
+            if (operation == 1) {
+                result = toMorseCode(text);
+            }
+            else if (operation == 2) {
+                result = fromMorseCode(text);
+            }
         }
-        else if (operation == 2) {
-            result = fromMorseCode(text);
+        else if (mode == 2) {
+            if (operation == 1) {
+                result = toBinary(text);
+            }
+            else if (operation == 2) {
+                result = fromBinary(text);
+            }
+        }
+
+        std::cout << "Result: " << result << "\n\n--------------------\n" << std::endl;
+
+        // Ask if the user wants to continue
+        std::cout << "Do you want to do another operation? (y/n): ";
+        char choice;
+        std::cin >> choice;
+
+        if (choice != 'y' && choice != 'Y') {
+            std::cout << "Exiting program. Goodbye!" << std::endl;
+            break; // Exit the loop if user doesn't want to continue
         }
     }
-    else if (mode == 2) {
-        if (operation == 1) {
-            result = toBinary(text);
-        }
-        else if (operation == 2) {
-            result = fromBinary(text);
-        }
-    }
-
-    std::cout << "Result: " << result << std::endl;
 
     return 0;
 }
