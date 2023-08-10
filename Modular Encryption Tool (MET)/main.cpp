@@ -1,4 +1,4 @@
-#include "MorseCodeTable.h"
+﻿#include "MorseCodeTable.h"
 #include <iostream>
 #include <string>
 #include <algorithm>
@@ -8,6 +8,7 @@
 #include <iomanip>
 #include <cassert>
 #include <map>
+
 
 // Function to convert plain text to Morse code
 std::string toMorseCode(const std::string& text) {
@@ -61,6 +62,21 @@ std::string fromBinary(const std::string& binary) {
 }
 
 int main() {
+
+    // Write logo above the terminal
+    std::cout << "      ___           ___           ___     " << std::endl;
+    std::cout << "     /\\__\\         /\\  \\         /\\  \\    " << std::endl;
+    std::cout << "    /::|  |       /::\\  \\        \\:\\  \\   " << std::endl;
+    std::cout << "   /:|:|  |      /:/\\:\\  \\        \\:\\  \\  " << std::endl;
+    std::cout << "  /:/|:|__|__   /::\\~\\:\\  \\       /::\\  \\ " << std::endl;
+    std::cout << " /:/ |::::\\__\\ /:/\\:\\ \\:\\__\\     /:/\\:\\__\\" << std::endl;
+    std::cout << " \\/__/~~/:/  / \\:\\~\\:\\ \\/__/    /:/  \\/__/" << std::endl;
+    std::cout << "       /:/  /   \\:\\ \\:\\__\\     /:/  /     " << std::endl;
+    std::cout << "      /:/  /     \\:\\ \\/__/     \\/__/      " << std::endl;
+    std::cout << "     /:/  /       \\:\\__\\                  " << std::endl;
+    std::cout << "     \\/__/         \\/__/                  " << std::endl;
+    std::cout << "\n\n";
+
     std::string text;
 
     while (true) {
