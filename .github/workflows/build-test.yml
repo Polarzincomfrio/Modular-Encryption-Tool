@@ -1,0 +1,44 @@
+name: Build and Test
+
+on: [push]
+
+jobs:
+  build-ubuntu:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+      
+    - name: Set up C++ environment
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y g++
+        
+    - name: Build code
+      run: |
+        g++ -o MET main.cpp
+        
+    - name: Test code
+      run: |
+        ./MET
+
+  build-windows:
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+      
+    - name: Set up C++ environment
+      run: |
+        choco install visualstudio2019buildtools --package-parameters "--includeRecommended --includeOptional"
+        
+    - name: Build code
+      run: |
+        g++ -o MET main.cpp
+        
+    - name: Test code
+      run: |
+        MET.exe  # Use the actual executable name
+        
