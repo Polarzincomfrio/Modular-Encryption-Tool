@@ -4,7 +4,7 @@
 #include <string>
 
 // A map that associates characters with their Morse code representations
-extern std::map<char, std::string> morseCodeTable = {
+static std::map<char, std::string> morseCodeTable = {
     // Letters
     {'A', ".-"}, {'B', "-..."}, {'C', "-.-."},
     {'D', "-.."}, {'E', "."}, {'F', "..-."}, {'G', "--."},
