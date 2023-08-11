@@ -6,9 +6,8 @@
 
 using namespace MET;
 
-int main() {
-
-    // Write logo above the terminal
+inline void constructLogo() {
+    // Writes logo above the terminal
     std::cout << "      ___           ___           ___     " << std::endl;
     std::cout << "     /\\__\\         /\\  \\         /\\  \\    " << std::endl;
     std::cout << "    /::|  |       /::\\  \\        \\:\\  \\   " << std::endl;
@@ -21,8 +20,9 @@ int main() {
     std::cout << "     /:/  /       \\:\\__\\                   " << std::endl;
     std::cout << "     \\/__/         \\/__/        by: Joao Vitor Polverari " << std::endl;
     std::cout << "\n\n";
-    // ...
+}
 
+inline void processConversionLoop() {
     std::string text;  // String to hold user input
 
     while (true) {  // Start an infinite loop
@@ -72,6 +72,13 @@ int main() {
             break;  // Exit the loop if the user doesn't want to continue
         }
     }
+}
+
+int main() {
+
+    constructLogo(); // Invokes the function that constructs ASCII logo in the terminal
+
+    processConversionLoop(); // Invokes the function that handles user input, performs conversions, and displays results
 
     return 0;  // Return 0 to indicate successful program execution
 }
