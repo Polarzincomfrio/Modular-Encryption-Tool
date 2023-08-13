@@ -1,84 +1,126 @@
 ﻿#include <iostream>
 #include <string>
+#include <chrono>
+#include <thread>
 
 #include "tool/Encryptor.h"
 #include "tool/Decryptor.h"
 
 using namespace MET;
 
-inline void constructLogo() {
-    // Writes logo above the terminal
-    std::cout << "      ___           ___           ___     " << std::endl;
-    std::cout << "     /\\__\\         /\\  \\         /\\  \\    " << std::endl;
-    std::cout << "    /::|  |       /::\\  \\        \\:\\  \\   " << std::endl;
-    std::cout << "   /:|:|  |      /:/\\:\\  \\        \\:\\  \\  " << std::endl;
-    std::cout << "  /:/|:|__|__   /::\\~\\:\\  \\       /::\\  \\ " << std::endl;
-    std::cout << " /:/ |::::\\__\\ /:/\\:\\ \\:\\__\\     /:/\\:\\__\\" << std::endl;
-    std::cout << " \\/__/~~/:/  / \\:\\~\\:\\ \\/__/    /:/  \\/__/" << std::endl;
-    std::cout << "       /:/  /   \\:\\ \\:\\__\\     /:/  /     " << std::endl;
-    std::cout << "      /:/  /     \\:\\ \\/__/     \\/__/      " << std::endl;
-    std::cout << "     /:/  /       \\:\\__\\                   " << std::endl;
-    std::cout << "     \\/__/         \\/__/        by: Joao Vitor Polverari " << std::endl;
-    std::cout << "\n\n";
+void printDivider() {
+    std::cout << "--------------------\n";
 }
 
-inline void processConversionLoop() {
-    std::string text;  // String to hold user input
+int getUserInputInt(const std::string& prompt) {
+    int value;
+    std::cout << prompt;
+    std::cin >> value;
+    return value;
+}
 
-    while (true) {  // Start an infinite loop
-        int mode, operation;
+std::string getUserInputText(const std::string& prompt) {
+    std::string text;
+    std::cout << prompt;
+    std::cin.ignore();
+    std::getline(std::cin, text);
+    return text;
+}
 
-        // Prompt the user to select mode
-        std::cout << "Select mode:\n1. Morse Code\n2. Binary\n--------------------\n";
-        std::cin >> mode;
+void processMorseMode(int operation) {
+    std::string text = getUserInputText("Enter text: ");
+    std::string result;
 
-        // Prompt the user to select operation
-        std::cout << "--------------------\nSelect operation: \n1. Encrypt \n2. Decrypt \n--------------------\n";
-        std::cin >> operation;
+    if (operation == 1) {
+        result = Encryptor::textToMorse(text);
+    }
+    else if (operation == 2) {
+        result = Decryptor::morseToText(text);
+    }
 
-        // Prompt the user to enter text
-        std::cout << "--------------------\nEnter text: ";
-        std::cin.ignore();  // Clear the newline character
-        std::getline(std::cin, text);  // Read the entire line of text entered by the user
+    std::cout << "Result: " << result << "\n\n";
+}
 
-        std::string result;  // String to hold the resulting conversion
+void processBinaryMode(int operation) {
+    std::string text = getUserInputText("Enter text: ");
+    std::string result;
 
-        if (mode == 1) {  // If mode is 'Morse Code'
-            if (operation == 1) {  // If operation is 'Encrypt'
-                result = Encryptor::textToMorse(text);  // Convert plain text to Morse code
-            }
-            else if (operation == 2) {  // If operation is 'Decrypt'
-                result = Decryptor::morseToText(text);  // Convert Morse code to plain text
-            }
+    if (operation == 1) {
+        result = Encryptor::textToBinary(text);
+    }
+    else if (operation == 2) {
+        result = Decryptor::binaryToText(text);
+    }
+
+    std::cout << "Result: " << result << "\n\n";
+}
+
+void processCaesarMode(int operation) {
+    std::string text = getUserInputText("Enter text: ");
+    int shift = getUserInputInt("Enter Caesar Cipher shift value: ");
+    std::string result;
+
+    if (operation == 1) {
+        result = Encryptor::textToCaesarCipher(text, shift);
+    }
+    else if (operation == 2) {
+        result = Decryptor::caesarCipherToText(text, shift);
+    }
+
+    std::cout << "Result: " << result << "\n\n";
+}
+
+void processConversionLoop() {
+    while (true) {
+        printDivider();
+        int mode = getUserInputInt("Select mode:\n1. Morse Code\n2. Binary\n3. Caesar Cipher\nYour Input: ");
+        printDivider();
+        int operation = getUserInputInt("Select operation:\n1. Encrypt\n2. Decrypt\nYour Input: ");
+        printDivider();
+
+        switch (mode) {
+        case 1:
+            processMorseMode(operation);
+            break;
+        case 2:
+            processBinaryMode(operation);
+            break;
+        case 3:
+            processCaesarMode(operation);
+            break;
+        default:
+            std::cout << "Invalid mode. Please try again.\n\n";
         }
-        else if (mode == 2) {  // If mode is 'Binary'
-            if (operation == 1) {  // If operation is 'Encrypt'
-                result = Encryptor::textToBinary(text);  // Convert plain text to binary representation
-            }
-            else if (operation == 2) {  // If operation is 'Decrypt'
-                result = Decryptor::binaryToText(text);  // Convert binary representation to plain text
-            }
-        }
 
-        std::cout << "Result: " << result << "\n\n--------------------\n" << std::endl;  // Display the result of the conversion
-
-        // Ask the user if they want to continue
-        std::cout << "Do you want to do another operation? (y/n): ";
         char choice;
+        std::cout << "Do you want to do another operation? (y/n): ";
         std::cin >> choice;
 
         if (choice != 'y' && choice != 'Y') {
-            std::cout << "Exiting program. Goodbye!" << std::endl;
-            break;  // Exit the loop if the user doesn't want to continue
+            std::cout << "Exiting program. Goodbye!\n";
+            std::this_thread::sleep_for(std::chrono::seconds(1));
+            break;
         }
     }
 }
 
 int main() {
+    // Print app's logo...
+    std::cout << R"(
+      ___           ___           ___     
+     /\__\         /\  \         /\  \    
+    /::|  |       /::\  \        \:\  \   
+   /:|:|  |      /:/\:\  \        \:\  \  
+  /:/|:|__|__   /::\~\:\  \       /::\  \ 
+ /:/ |::::\__\ /:/\:\ \:\__\     /:/\:\__\
+ \/__/~~/:/  / \:\~\:\ \/__/    /:/  \/__/
+       /:/  /   \:\ \:\__\     /:/  /     
+      /:/  /     \:\ \/__/     \/__/      
+     /:/  /       \:\__\                   
+     \/__/         \/__/        by: Joao Vitor Polverari
+)" << std::endl;
+    //...
 
-    constructLogo(); // Invokes the function that constructs ASCII logo in the terminal
-
-    processConversionLoop(); // Invokes the function that handles user input, performs conversions, and displays results
-
-    return 0;  // Return 0 to indicate successful program execution
+    processConversionLoop();
+    return 0;
 }

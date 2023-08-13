@@ -1,29 +1,48 @@
 #include "Decryptor.h"
 
 namespace MET {
-	std::string Decryptor::binaryToText(const std::string& binary) {
-        std::string text;  // String to hold the resulting plain text
-        std::istringstream iss(binary);  // Create a string stream to tokenize the binary string
-        std::string binaryByte;  // String to hold each binary byte
-        while (iss >> binaryByte) {  // Loop through each tokenized binary byte
-            char byte = static_cast<char>(std::bitset<8>(binaryByte).to_ulong());  // Convert the binary byte to a character and store it
-            text += byte;  // Append the character to the result string
+
+    std::string Decryptor::binaryToText(const std::string& binary) {
+        std::string text;
+        std::istringstream iss(binary);
+        std::string binaryByte;
+
+        while (iss >> binaryByte) {
+            char byte = static_cast<char>(std::bitset<8>(binaryByte).to_ulong());
+            text += byte;
         }
-        return text;  // Return the resulting plain text string
-	}
+        return text;
+    }
 
     std::string Decryptor::morseToText(const std::string& morse) {
-        std::string text;  // String to hold the resulting plain text
-        std::istringstream iss(morse);  // Create a string stream to tokenize the Morse code string
-        std::string morseChar;  // String to hold each Morse code character
-        while (iss >> morseChar) {  // Loop through each tokenized Morse code character
-            for (const auto& pair : morseCodeTable) {  // Loop through each pair in the Morse code table
-                if (pair.second == morseChar) {  // If the Morse code character matches a value in the table
-                    text += pair.first;  // Append the corresponding plain text character to the result string
-                    break;  // Exit the loop after finding the matching Morse code
+        std::string text;
+        std::istringstream iss(morse);
+        std::string morseChar;
+
+        while (iss >> morseChar) {
+            for (const auto& pair : morseCodeTable) {
+                if (pair.second == morseChar) {
+                    text += pair.first;
+                    break;
                 }
             }
         }
-        return text;  // Return the resulting plain text string
+        return text;
+    }
+
+    std::string Decryptor::caesarCipherToText(const std::string& cipherText, int shift) {
+        std::string result;
+
+        for (char c : cipherText) {
+            if (isalpha(c)) {
+                char base = (isupper(c)) ? 'A' : 'a';
+                char decryptedChar = base + (c - base + (26 - shift)) % 26;
+                result += decryptedChar;
+            }
+            else {
+                result += c;
+            }
+        }
+        return result;
     }
 }

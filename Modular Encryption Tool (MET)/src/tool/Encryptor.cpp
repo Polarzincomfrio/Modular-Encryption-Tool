@@ -1,26 +1,42 @@
 #include "Encryptor.h"
 
 namespace MET {
-	std::string Encryptor::textToBinary(const std::string& text)
-	{
-        std::string binary;  // String to hold the resulting binary representation
-        for (char c : text) {  // Loop through each character in the input text
-            binary += std::bitset<8>(c).to_string() + " ";  // Convert the character to an 8-bit binary string and append to the result string
-        }
-        return binary;  // Return the resulting binary representation string
-	}
+    std::string Encryptor::textToBinary(const std::string& text) {
+        std::string binary;
 
-	std::string Encryptor::textToMorse(const std::string& text)
-	{
-        std::string morse;  // String to hold the resulting Morse code
-        for (char c : text) {  // Loop through each character in the input text
-            if (morseCodeTable.find(std::toupper(c)) != morseCodeTable.end()) {  // Check if the character is in the Morse code table
-                morse += morseCodeTable[std::toupper(c)] + " ";  // Append the Morse code equivalent to the result string
+        for (char c : text) {
+            binary += std::bitset<8>(c).to_string() + " ";
+        }
+        return binary;
+    }
+
+    std::string Encryptor::textToMorse(const std::string& text) {
+        std::string morse;
+
+        for (char c : text) {
+            if (morseCodeTable.find(std::toupper(c)) != morseCodeTable.end()) {
+                morse += morseCodeTable[std::toupper(c)] + " ";
             }
             else {
-                morse += " ";  // If the character is not in the table, add a space to the result string
+                morse += " ";
             }
         }
-        return morse;  // Return the resulting Morse code string
-	}
+        return morse;
+    }
+
+    std::string Encryptor::textToCaesarCipher(const std::string& text, int shift) {
+        std::string result = "";
+
+        for (char c : text) {
+            if (isalpha(c)) {
+                char base = (isupper(c)) ? 'A' : 'a';
+                char encryptedChar = base + (c - base + shift) % 26;
+                result += encryptedChar;
+            }
+            else {
+                result += c;
+            }
+        }
+        return result;
+    }
 }
