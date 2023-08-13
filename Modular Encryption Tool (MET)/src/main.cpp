@@ -117,7 +117,7 @@ int main() {
        /:/  /   \:\ \:\__\     /:/  /     
       /:/  /     \:\ \/__/     \/__/      
      /:/  /       \:\__\                   
-     \/__/         \/__/        by: Joao Vitor Polverari
+     \/__/         \/__/       by: Joao Vitor Polverari
 )" << std::endl;
     //...
 
