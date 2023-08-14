@@ -14,17 +14,32 @@ void printDivider() {
 
 int getUserInputInt(const std::string& prompt) {
     int value;
-    std::cout << prompt;
-    std::cin >> value;
-    return value;
+    while (true) {
+        std::cout << prompt;
+        if (std::cin >> value) {
+            return value;
+        }
+        else {
+            std::cout << "Invalid input. Please enter a valid integer.\n";
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        }
+    }
 }
 
 std::string getUserInputText(const std::string& prompt) {
     std::string text;
-    std::cout << prompt;
-    std::cin.ignore();
-    std::getline(std::cin, text);
-    return text;
+    while (true) {
+        std::cout << prompt;
+        std::cin.ignore();
+        std::getline(std::cin, text);
+        if (!text.empty()) {
+            return text;
+        }
+        else {
+            std::cout << "Invalid input. Please enter some text.\n";
+        }
+    }
 }
 
 void processMorseMode(int operation) {
@@ -73,9 +88,29 @@ void processCaesarMode(int operation) {
 void processConversionLoop() {
     while (true) {
         printDivider();
-        int mode = getUserInputInt("Select mode:\n1. Morse Code\n2. Binary\n3. Caesar Cipher\nYour Input: ");
+
+        int mode = 0;
+        while (mode < 1 || mode > 3) { // Change the mode max number if a new mode case is added
+            mode = getUserInputInt("Select mode:\n1. Morse Code\n2. Binary\n3. Caesar Cipher\nYour Input: ");
+            if (mode < 1 || mode > 3) { // Change the mode max number if a new mode case is added
+                printDivider();
+                std::cout << "Invalid mode. Please enter a valid mode.\n";
+                printDivider();
+            }
+        }
+
         printDivider();
-        int operation = getUserInputInt("Select operation:\n1. Encrypt\n2. Decrypt\nYour Input: ");
+
+        int operation = 0;
+        while (operation < 1 || operation > 2) { // Change the operation max number if a new operation case is added
+            operation = getUserInputInt("Select operation:\n1. Encrypt\n2. Decrypt\nYour Input: ");
+            if (operation < 1 || operation > 2) { // Change the operation max number if a new operation case is added
+                printDivider();
+                std::cout << "Invalid operation. Please enter a valid operation.\n";
+                printDivider();
+            }
+        }
+
         printDivider();
 
         switch (mode) {
